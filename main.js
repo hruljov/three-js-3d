@@ -1,58 +1,52 @@
 /* creating function to initialize environment */
 function init() {
 
-    var scene = new THREE.Scene();                                                                          //setting up scene
+    var scene = new THREE.Scene();                                                                              //setting up scene
 
     /* setting up fog */
-    var enableFog = false;                                                                                  //fog trigger
+    var enableFog = false;                                                                                      //fog trigger
     if (enableFog) {
-        scene.fog = new THREE.FogExp2(0xffffff, 0.2);                                                       //fog function
+        scene.fog = new THREE.FogExp2(0xffffff, 0.2);                                                           //fog function
     }
 
-    var box = getBox(1, 1, 1);                                                                              //calling getBox function
-    var plane = getPlane(20);                                                                               //calling getPlabe function
-    var pointLight = getPointLight(1);
-    var sphere = getSphere(0.05);
+    /* creating objects */
+    var box = getBox(1, 1, 1);                                                                                  //calling getBox function
+    var plane = getPlane(20);                                                                                   //calling getPlabe function
+    var pointLight = getPointLight(1);                                                                          //calling getPointLight function
+    var sphere = getSphere(0.05);                                                                               //calling getSphere function
 
-    plane.name = 'plane-1';                                                                                 //setting plane name
+    plane.name = 'plane-1';                                                                                     //setting plane name
 
+    /* transforming objects */
+    box.position.y = box.geometry.parameters.height/2;                                                          //setting up box position
+    plane.rotation.x = Math.PI/2;                                                                               //rotating plane using "Math" module
+    pointLight.position.y = 2;                                                                                  //setting up point light position
 
-    //setting up "box" position
-    box.position.y = box.geometry.parameters.height/2;
-    //rotating the plane. Calling "Math" module
-    plane.rotation.x = Math.PI/2;
-    pointLight.position.y = 2;
+    /* adding objects to the scene */
+    scene.add(box);                                                                                             //adding box object to the scene
+    scene.add(plane);                                                                                           //adding plane object to the scene
+    scene.add(pointLight);                                                                                      //adding point light object to the scene
+    pointLight.add(sphere);                                                                                     //adding light bulb object to the scene
 
-    scene.add(box);                                                                                         //adding box object to the scene
-    scene.add(plane);                                                                                       //adding plane object to the scene
-    scene.add(pointLight);                                                                                  //adding point light object to the scene
-    pointLight.add(sphere);                                                                                 //adding light bulb object to the scene
-
-    //setting up camera
-    var camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 1000);
+    /* setting up camera */
+    var camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 1000);                //creating camera
+    camera.position.x = 1;                                                                                      //setting up camera X position
+    camera.position.y = 2;                                                                                      //setting up camera Y position
+    camera.position.z = 5;                                                                                      //setting up camera Z position
+    camera.lookAt (new THREE.Vector3(0, 0, 0));                                                                 //setting up camera target
     
-    //setting up camera position
-    camera.position.x = 1;
-    camera.position.y = 2;
-    camera.position.z = 5;
-    //setting up camera target
-    camera.lookAt (new THREE.Vector3(0, 0, 0));
-    
-    //setting up renderer
-    var renderer = new THREE.WebGLRenderer();
-    //setting up render resolution
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    //setting background
-    renderer.setClearColor('rgb(120, 120, 120)');
+    /* setting up renderer */
+    var renderer = new THREE.WebGLRenderer();                                                                   //creating renderer
+    renderer.setSize(window.innerWidth, window.innerHeight);                                                    //setting up render resolution
+    renderer.setClearColor('rgb(120, 120, 120)');                                                               //setting background
 
     /*
     DOM (Document Object Model) – объектная модель, используемая для XML/HTML-документов.
     DOM – это представление документа в виде дерева объектов, доступное для изменения через JavaScript.
     */
     document.getElementById('webgl').appendChild(renderer.domElement);
-
-    //calling "update" function
-    update(renderer, scene, camera);
+    
+    update(renderer, scene, camera);                                                                            //calling "update" function
 
     return scene;
 
@@ -74,7 +68,7 @@ function getBox(w, h, d) {
 /* creating sphere object */
 function getSphere(size) {
 
-    var geometry = new THREE.SphereGeometry(size, 24, 24);                                                              //setting up sphere geometry
+    var geometry = new THREE.SphereGeometry(size, 24, 24);                                                      //setting up sphere geometry
     var material = new THREE.MeshBasicMaterial({color: 'rgb(255, 255, 255)'});                                  //setting up the material
     var mesh = new THREE.Mesh(geometry, material);                                                              //creating a mesh object from the geometry and a material
 
