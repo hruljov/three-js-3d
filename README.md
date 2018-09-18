@@ -1,4 +1,4 @@
-# three-js-3d
+Instructions
 
 1) You will need NODE.JS + NPM and GIT.
 
