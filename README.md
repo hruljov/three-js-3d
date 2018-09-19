@@ -3,7 +3,7 @@ Instructions
 1) You will need NODE.JS + NPM and GIT.
 
 
-2) You should probably install this globally. From NODE.JS launch:
+2) You should probably install Live Server globally. From NODE.JS launch:
 ```
     npm install -g live-server
 ```
